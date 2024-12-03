@@ -1,70 +1,92 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButton, Text } from '@react-navigation/elements';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderButton, Text } from "@react-navigation/elements";
 import {
   createStaticNavigation,
   StaticParamList,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
-import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
-import { Home } from './screens/Home';
-import { Profile } from './screens/Profile';
-import { Settings } from './screens/Settings';
-import { Updates } from './screens/Updates';
-import { NotFound } from './screens/NotFound';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Image } from "react-native";
+import riwayat from "../assets/riwayat.png";
+import profile from "../assets/profile.png";
+import home from "../assets/home.png";
+import { Home } from "./screens/Home";
+import { Profile } from "./screens/Profile";
+import { Settings } from "./screens/Settings";
+import { Updates } from "./screens/Updates";
+import { NotFound } from "./screens/NotFound";
 
-const HomeTabs = createBottomTabNavigator({
-  screens: {
-    Home: {
-      screen: Home,
-      options: {
-        title: 'Feed',
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={newspaper}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-    Updates: {
-      screen: Updates,
-      options: {
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            source={bell}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-  },
-});
+// Create Bottom Tab Navigator
+const Tab = createBottomTabNavigator();
+
+function HomeTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#33C5E8', 
+        tabBarInactiveTintColor: 'gray', 
+        tabBarStyle: { backgroundColor: 'white' }, 
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Feed',
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={home}
+              style={{ width: size, height: size }}
+              tintColor={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Updates"
+        component={Updates}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={riwayat}
+              style={{ width: size, height: size }}
+              tintColor={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={profile}
+              style={{ width: size, height: size }}
+              tintColor={color}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 const RootStack = createNativeStackNavigator({
   screens: {
     HomeTabs: {
       screen: HomeTabs,
       options: {
-        title: 'Home',
+        title: "Home",
         headerShown: false,
       },
     },
     Profile: {
       screen: Profile,
       linking: {
-        path: ':user(@[a-zA-Z0-9-_]+)',
+        path: ":user(@[a-zA-Z0-9-_]+)",
         parse: {
-          user: (value) => value.replace(/^@/, ''),
+          user: (value) => value.replace(/^@/, ""),
         },
         stringify: {
           user: (value) => `@${value}`,
@@ -74,7 +96,7 @@ const RootStack = createNativeStackNavigator({
     Settings: {
       screen: Settings,
       options: ({ navigation }) => ({
-        presentation: 'modal',
+        presentation: "modal",
         headerRight: () => (
           <HeaderButton onPress={navigation.goBack}>
             <Text>Close</Text>
@@ -85,10 +107,10 @@ const RootStack = createNativeStackNavigator({
     NotFound: {
       screen: NotFound,
       options: {
-        title: '404',
+        title: "404",
       },
       linking: {
-        path: '*',
+        path: "*",
       },
     },
   },
