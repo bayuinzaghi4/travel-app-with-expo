@@ -22,7 +22,7 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#33C5E8', 
+        tabBarActiveTintColor: '#3F51B5', 
         tabBarInactiveTintColor: 'gray', 
         tabBarStyle: { backgroundColor: 'white' }, 
         headerShown: false,
@@ -32,7 +32,7 @@ function HomeTabs() {
         name="Home"
         component={Home}
         options={{
-          title: 'Feed',
+          title: 'Beranda',
           tabBarIcon: ({ color, size }) => (
             <Image
               source={home}
@@ -43,7 +43,7 @@ function HomeTabs() {
         }}
       />
       <Tab.Screen
-        name="Updates"
+        name="Riwayat"
         component={Updates}
         options={{
           tabBarIcon: ({ color, size }) => (

@@ -1,5 +1,8 @@
 import { Text } from "@react-navigation/elements";
 import { StyleSheet, View, SafeAreaView, ScrollView, Image } from "react-native";
+import { LogOut } from "lucide-react-native";
+import Button from "../../components/Button";
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
 
 interface ProfileItemProps {
   label: string;
@@ -15,8 +18,14 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ label, value }) => (
 
 
 export function Profile() {
+
+  const HandleLogout = () => {
+    console.log('Djikri Ganeng');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
+    <FocusAwareStatusBar barStyle="light-content" backgroundColor="#3F51B5" />
       <ScrollView>
           {/* Header */}
           <View style={styles.header}>
@@ -48,7 +57,14 @@ export function Profile() {
           </View>
 
           {/* Button LogOut */}
-          
+          <View style={styles.buttonContainer}>
+            <Button 
+            title="Log Out" 
+            onPress={HandleLogout} 
+            style={{width:170}}
+            icon={<LogOut color="#fff" size={22} />}
+            />
+          </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 16,
     fontWeight: '800',
-    color: '#33C5E8',
+    color: '#3F51B5',
   },
   NoReg: {
     marginTop: 4,
@@ -106,4 +122,7 @@ const styles = StyleSheet.create({
     color: '#303030',
     fontWeight: 700,
   },
+  buttonContainer: {
+    alignItems: 'center',
+  }
 });
