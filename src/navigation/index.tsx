@@ -9,11 +9,11 @@ import { Image } from "react-native";
 import riwayat from "../assets/riwayat.png";
 import profile from "../assets/profile.png";
 import home from "../assets/home.png";
-import { Home } from "./screens/Home";
 import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
 import { Updates } from "./screens/Updates";
 import { NotFound } from "./screens/NotFound";
+import Home from "./screens/Home";
 
 // Create Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
