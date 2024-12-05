@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   Image
 } from 'react-native';
-import { Grid, Bell, Plane, User, Calendar, Search } from 'lucide-react-native';
+import {  Bell, Plane, User, Calendar, Search } from 'lucide-react-native';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 
 
