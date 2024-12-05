@@ -10,9 +10,8 @@ export function Home() {
 
       {/* Header */}
       <View style={styles.header}>
-        <View>
           <View style={styles.sectionContainer}>
-            <View>
+            <View style={styles.container1}>
               <Image
                 source={require("./../../assets/travelLogo.png")}
                 style={styles.logoApp}
@@ -20,11 +19,13 @@ export function Home() {
               <Text style={styles.sectionTitle}>Travel System</Text>
             </View>
             <View>
-              <Bell size={25} color="#fff" />
+              <Bell size={25} color="#fff" style={styles.icon}/>
             </View>
           </View>
+          <View style={styles.titleContainer}>
+        <Text style={styles.welcomeTitle}>Selamat Datang</Text>
+        <Text style={styles.userTitle}>Dias Bayu Inzaghi - ISTD</Text>
         </View>
-        <Text>Home Screen</Text>
       </View>
     </SafeAreaView>
   );
@@ -41,6 +42,10 @@ const styles = StyleSheet.create({
   sectionContainer: {
     flexDirection: "row",
     marginTop: 14,
+    justifyContent: 'space-between',
+  },
+  container1: {
+    flexDirection: 'row'
   },
   logoApp: {
     width: 20,
@@ -52,5 +57,22 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontWeight: 700,
     color: "#fff",
+  },
+  icon: {
+    marginRight: 25
+  },
+  titleContainer: {
+    marginLeft: 25,
+    marginTop: 13
+  },
+  welcomeTitle: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: 400,
+  },
+  userTitle: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: 700,
   },
 });
