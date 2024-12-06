@@ -1,78 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   ScrollView,
-  TouchableOpacity,
   StyleSheet,
   SafeAreaView,
   Image
 } from 'react-native';
-import {  Bell, Plane, User, Calendar, Search } from 'lucide-react-native';
+import { Bell, Search } from 'lucide-react-native';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
-
-
-interface TravelRequestProps {
-  requestNo: string;
-  draftNo: string;
-  locations: number;
-  travelerName: string;
-  travelerId: string;
-  startDate: string;
-  endDate: string;
-}
-
-const TravelRequest: React.FC<TravelRequestProps> = ({
-  requestNo,
-  draftNo,
-  locations,
-  travelerName,
-  travelerId,
-  startDate,
-  endDate,
-}) => (
-  <View style={styles.card}>
-    <View style={styles.requestHeader}>
-      <Text style={styles.requestNo}>{requestNo}</Text>
-      <Text style={styles.draftNo}>Draf No - {draftNo}</Text>
-    </View>
-    <View style={styles.requestDetails}>
-      <View style={styles.row}>
-        <Plane size={16} color="#666" />
-        <Text style={styles.detailText}>Overseas</Text>
-        <Text style={styles.separator}>----------------------</Text>
-        <Text style={styles.locationText}>{locations} Location</Text>
-      </View>
-      <View style={styles.row}>
-        <User size={16} color="#666" />
-        <Text style={styles.detailText}>{travelerName} ({travelerId})</Text>
-      </View>
-      <View style={styles.row}>
-        <Calendar size={16} color="#666" />
-        <Text style={styles.detailText}>{startDate} / {endDate}</Text>
-      </View>
-    </View>
-    <TouchableOpacity style={styles.uploadButton}>
-      <Text style={styles.uploadButtonText}>Upload Document</Text>
-    </TouchableOpacity>
-  </View>
-);
+import TravelCard from '../../components/TravelCard';
+import Button from '../../components/Button';
 
 const Home: React.FC = () => {
+  const [activeButton, setActiveButton] = useState<string>('open');
+
+  const handleButtonPress = (buttonName: string): void => {
+    if (activeButton !== buttonName) {
+      setActiveButton(buttonName);
+    }
+  };
+
+  const getButtonColor = (buttonName: string) => {
+    return activeButton === buttonName ? '#3F51B5' : '#fff';
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-    <FocusAwareStatusBar barStyle="light-content" backgroundColor="#3F51B5" />
+      <FocusAwareStatusBar barStyle="light-content" backgroundColor="#3F51B5" />
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Image 
-          source={require('./../../assets/travelLogo.png')}
-          style={styles.logo}/>
-          <Text style={styles.headerTitle}>Travel System</Text>
+          <View style={styles.container1}>
+            <Image 
+              source={require('./../../assets/travelLogo.png')}
+              style={styles.logo}
+            />
+            <Text style={styles.headerTitle}>Travel System</Text>
+          </View>
           <Bell size={24} color="white" />
         </View>
         <Text style={styles.welcomeText}>Selamat Datang</Text>
-        <Text style={styles.userName}>Adnan Mahfuzhon - ISTD</Text>
+        <Text style={styles.userName}>Dias Bayu Inzaghi - ISTD</Text>
       </View>
 
       <View style={styles.searchContainer}>
@@ -85,36 +54,62 @@ const Home: React.FC = () => {
       </View>
 
       <View style={styles.tabs}>
-        <TouchableOpacity style={[styles.tab, styles.activeTab]}>
-          <Text style={[styles.tabText, styles.activeTabText]}>Open</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tab}>
-          <Text style={styles.tabText}>Draft</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tab}>
-          <Text style={styles.tabText}>Waiting</Text>
-        </TouchableOpacity>
+        {/* Button pertama */}
+        <Button 
+          title="Open" 
+          onPress={() => handleButtonPress('open')} 
+          style={StyleSheet.flatten([styles.ButtonCard, { backgroundColor: getButtonColor('open') }])}
+          textStyle={styles.titlee}
+        />
+        {/* Button kedua */}
+        <Button 
+          title="Draft" 
+          onPress={() => handleButtonPress('draft')} 
+          style={StyleSheet.flatten([styles.ButtonCard, { backgroundColor: getButtonColor('draft') }])}
+          textStyle={styles.titlee}
+        />
+        {/* Button ketiga */}
+        <Button 
+          title="Waiting" 
+          onPress={() => handleButtonPress('waiting')} 
+          style={StyleSheet.flatten([styles.ButtonCard, { backgroundColor: getButtonColor('waiting') }])}
+          textStyle={styles.titlee}
+        />
       </View>
 
       <ScrollView style={styles.content}>
-        <TravelRequest
-          requestNo="TP-24-13810"
-          draftNo="-"
-          locations={1}
-          travelerName="THAARIQ BASYAARAH"
-          travelerId="02335050"
-          startDate="08-10-2024"
-          endDate="11-10-2024"
-        />
-        <TravelRequest
-          requestNo="TP-24-13810"
-          draftNo="-"
-          locations={2}
-          travelerName="THAARIQ BASYAARAH"
-          travelerId="02335050"
-          startDate="08-10-2024"
-          endDate="11-10-2024"
-        />
+        <View style={styles.box}>
+          <TravelCard
+            referenceNumber="TP-24-13810"
+            travelType="Overseas"
+            locations={1}
+            travelerName="THAARIQ BASYAARAH"
+            travelerId="02335050"
+            startDate="08-10-2024"
+            endDate="11-10-2024"
+            onUpload={() => console.log('Upload pressed')}
+          />
+          <TravelCard
+            referenceNumber="TP-24-13810"
+            travelType="Overseas"
+            locations={1}
+            travelerName="THAARIQ BASYAARAH"
+            travelerId="02335050"
+            startDate="08-10-2024"
+            endDate="11-10-2024"
+            onUpload={() => console.log('Upload pressed')}
+          />
+          <TravelCard
+            referenceNumber="TP-24-13810"
+            travelType="Overseas"
+            locations={1}
+            travelerName="THAARIQ BASYAARAH"
+            travelerId="02335050"
+            startDate="08-10-2024"
+            endDate="11-10-2024"
+            onUpload={() => console.log('Upload pressed')}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -141,29 +136,44 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: '600',
+    marginLeft: 10,
+    textAlign: 'center'
   },
   welcomeText: {
+    marginTop: 15,
     color: 'white',
-    fontSize: 14,
+    fontSize: 11,
   },
   userName: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
   },
+  container1: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   searchContainer: {
-    margin: 16,
+    margin: 3,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 15,
     position: 'relative',
   },
   logo: {
     width: 20,
     height: 20,
   },
+  titlee: {
+    fontSize: 12
+  },
   searchInput: {
     backgroundColor: 'white',
     borderRadius: 8,
     padding: 12,
     paddingRight: 40,
+    borderWidth: 1,
+    borderColor: '#D5D5D5',
   },
   searchIcon: {
     position: 'absolute',
@@ -173,7 +183,8 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     paddingHorizontal: 16,
-    marginBottom: 16,
+    marginBottom: 10,
+    justifyContent: 'space-between'
   },
   tab: {
     marginRight: 16,
@@ -195,54 +206,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
+  box: {
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    justifyContent: 'center',
+    alignItems: 'center', 
+    marginBottom: 16, 
   },
-  requestHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  requestNo: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  draftNo: {
-    color: '#666',
-  },
-  requestDetails: {
-    gap: 8,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  detailText: {
-    color: '#666',
-    flex: 1,
-  },
-  separator: {
-    color: '#ccc',
-  },
-  locationText: {
-    color: '#FF9800',
-  },
-  uploadButton: {
-    backgroundColor: '#3F51B5',
-    borderRadius: 4,
-    padding: 12,
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  uploadButtonText: {
-    color: 'white',
-    fontWeight: '600',
-  },
+  ButtonCard: {
+    width: 100,
+    borderRadius: 5,
+    backgroundColor: '#fff'
+  }
 });
 
 export default Home;
-

@@ -59,9 +59,10 @@ export function Profile() {
           {/* Button LogOut */}
           <View style={styles.buttonContainer}>
             <Button 
+            textStyle={styles.butonLogout}
             title="Log Out" 
             onPress={HandleLogout} 
-            style={{width:170}}
+            style={{width:170, backgroundColor: '#3F51B5'}}
             icon={<LogOut color="#fff" size={22} />}
             />
           </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 20,
     alignItems: 'center',
   },
   title: {
@@ -124,5 +125,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
+  },
+  butonLogout: {
+    marginLeft: 10,
+    color: '#fff'
   }
 });

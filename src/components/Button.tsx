@@ -23,8 +23,8 @@ const Button: React.FC<ButtonProps> = ({
   title,
   style,
   textStyle,
-  color = "#3F51B5",
-  textColor = "#fff",   
+  color = "#fff",
+  textColor = "#000",   
   icon
 }) => {
   return (
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 600,
     color: "#fff",
-    marginLeft: 10,
   },
   button: {
     flexDirection: "row",
