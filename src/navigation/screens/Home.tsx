@@ -3,15 +3,16 @@ import {
   View,
   Text,
   TextInput,
-  ScrollView,
   StyleSheet,
   SafeAreaView,
-  Image
+  Image,
+  FlatList
 } from 'react-native';
 import { Bell, Search } from 'lucide-react-native';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 import TravelCard from '../../components/TravelCard';
 import Button from '../../components/Button';
+import travelData from './dummy';
 
 const Home: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string>('open');
@@ -77,40 +78,23 @@ const Home: React.FC = () => {
         />
       </View>
 
-      <ScrollView style={styles.content}>
-        <View style={styles.box}>
-          <TravelCard
-            referenceNumber="TP-24-13810"
-            travelType="Overseas"
-            locations={1}
-            travelerName="THAARIQ BASYAARAH"
-            travelerId="02335050"
-            startDate="08-10-2024"
-            endDate="11-10-2024"
-            onUpload={() => console.log('Upload pressed')}
+          <FlatList
+            contentContainerStyle={styles.flatListContainer}
+            data={travelData}
+            renderItem={({ item }) =>
+            <TravelCard
+            key={item.id}
+            referenceNumber={item.referenceNumber}
+            travelType={item.travelType}
+            locations={item.locations}
+            travelerName={item.travelerName}
+            travelerId={item.travelerId}
+            startDate={item.startDate}
+            endDate={item.endDate}
+            />
+          }
+          keyExtractor={item => item.id}
           />
-          <TravelCard
-            referenceNumber="TP-24-13810"
-            travelType="Overseas"
-            locations={1}
-            travelerName="THAARIQ BASYAARAH"
-            travelerId="02335050"
-            startDate="08-10-2024"
-            endDate="11-10-2024"
-            onUpload={() => console.log('Upload pressed')}
-          />
-          <TravelCard
-            referenceNumber="TP-24-13810"
-            travelType="Overseas"
-            locations={1}
-            travelerName="THAARIQ BASYAARAH"
-            travelerId="02335050"
-            startDate="08-10-2024"
-            endDate="11-10-2024"
-            onUpload={() => console.log('Upload pressed')}
-          />
-        </View>
-      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -206,17 +190,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
-  box: {
-    flexDirection: 'row', 
-    flexWrap: 'wrap', 
-    justifyContent: 'center',
-    alignItems: 'center', 
-    marginBottom: 16, 
-  },
   ButtonCard: {
     width: 100,
     borderRadius: 5,
     backgroundColor: '#fff'
+  },
+  flatListContainer: {
+    flexGrow: 1,  // Pastikan FlatList menggunakan ruang yang tersedia
+    paddingHorizontal: 16,
+    justifyContent: 'center', // Memusatkan item
+    alignItems: 'center'  // Memusatkan item secara horisontal
   }
 });
 
