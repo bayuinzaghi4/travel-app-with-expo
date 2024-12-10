@@ -1,19 +1,23 @@
-import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from "react-native";
+import SearchButton from "../../components/SearchButton";
+import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Updates() {
   return (
-    <View style={styles.container}>
-      <Text>Updates Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FocusAwareStatusBar barStyle="light-content" backgroundColor="#3F51B5" />
+      <SearchButton style={styles.SearchButton} placeholder="Search" />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
+    alignItems: "center",
+  },
+  SearchButton: {
+    marginTop: 25,
   },
 });

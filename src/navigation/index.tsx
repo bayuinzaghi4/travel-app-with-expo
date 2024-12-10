@@ -14,6 +14,8 @@ import { Settings } from "./screens/Settings";
 import { Updates } from "./screens/Updates";
 import { NotFound } from "./screens/NotFound";
 import Home from "./screens/Home";
+import Upload from "./screens/Upload";
+import Notification from "./screens/Notification";
 
 // Create Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -83,26 +85,21 @@ const RootStack = createNativeStackNavigator({
     },
     Profile: {
       screen: Profile,
-      linking: {
-        path: ":user(@[a-zA-Z0-9-_]+)",
-        parse: {
-          user: (value) => value.replace(/^@/, ""),
-        },
-        stringify: {
-          user: (value) => `@${value}`,
-        },
-      },
     },
     Settings: {
       screen: Settings,
-      options: ({ navigation }) => ({
-        presentation: "modal",
-        headerRight: () => (
-          <HeaderButton onPress={navigation.goBack}>
-            <Text>Close</Text>
-          </HeaderButton>
-        ),
-      }),
+    },
+    Upload: {
+      screen: Upload,
+      options: {
+        headerShown: false,
+      },
+    },
+    Notification: {
+      screen: Notification,
+      options: {
+        headerShown: false,
+      },
     },
     NotFound: {
       screen: NotFound,
