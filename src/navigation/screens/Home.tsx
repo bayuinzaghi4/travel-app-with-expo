@@ -6,8 +6,10 @@ import {
   SafeAreaView,
   Image,
   FlatList,
+  Animated,
+  Platform,
 } from "react-native";
-import { Bell } from "lucide-react-native";
+import { Bell, Menu, ArrowLeft } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/native";
 import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
 import SearchButton from "../../components/SearchButton";
@@ -17,7 +19,28 @@ import travelData from "./dummy";
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeButton, setActiveButton] = useState<string>("open");
+
+   const drawerAnimation = React.useRef(new Animated.Value(0)).current;
+  
+    const toggleDrawer = () => {
+      const toValue = isDrawerOpen ? 0 : 1;
+      Animated.timing(drawerAnimation, {
+        toValue,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+      setIsDrawerOpen(!isDrawerOpen);
+    };
+  
+    const translateX = drawerAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-280, 0],
+    });
+
+    
 
   const handleButtonPress = (buttonName: string): void => {
     if (activeButton !== buttonName) {
@@ -35,6 +58,7 @@ const Home: React.FC = () => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
+          <Menu size={24} color="white" />
           <View style={styles.container1}>
             <Image
               source={require("./../../assets/travelLogo.png")}
@@ -48,8 +72,7 @@ const Home: React.FC = () => {
             onPress={() => navigation.navigate("Notification")}
           />
         </View>
-        <Text style={styles.welcomeText}>Selamat Datang</Text>
-        <Text style={styles.userName}>Dias Bayu Inzaghi - ISTD</Text>
+        <Text style={styles.userName}>Travel Settlement</Text>
       </View>
 
       {/* Search Button */}
@@ -116,13 +139,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#3F51B5",
     padding: 16,
     paddingTop: 8,
-    height: 109,
+    height: 100,
   },
   headerContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 8,
+    width: "100%",
   },
   headerTitle: {
     color: "white",
@@ -131,19 +155,18 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     textAlign: "center",
   },
-  welcomeText: {
-    marginTop: 15,
-    color: "white",
-    fontSize: 11,
-  },
   userName: {
     color: "white",
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 16,
+    fontWeight: "700",
+    marginTop: 20,
+    marginLeft: 5,
   },
   container1: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
   logo: {
     width: 20,

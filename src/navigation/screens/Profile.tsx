@@ -66,8 +66,8 @@ export function Profile() {
         {/* Button LogOut */}
         <View style={styles.buttonContainer}>
           <Button
-            textStyle={styles.butonLogout}
             title="Log Out"
+            textStyle={styles.butonLogout}
             onPress={HandleLogout}
             style={{ width: 170, backgroundColor: "#3F51B5" }}
             icon={<LogOut color="#fff" size={22} />}

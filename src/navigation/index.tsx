@@ -13,6 +13,9 @@ import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
 import { Updates } from "./screens/Updates";
 import { NotFound } from "./screens/NotFound";
+import { WelcomeScreen } from "./screens/Welcome";
+import { Login } from "./screens/Login";
+import { TravelSystem } from "./screens/ex";
 import Home from "./screens/Home";
 import Upload from "./screens/Upload";
 import Notification from "./screens/Notification";
@@ -76,10 +79,16 @@ function HomeTabs() {
 
 const RootStack = createNativeStackNavigator({
   screens: {
+    WelcomeScreen: {
+      screen: WelcomeScreen,
+      options: {
+        title: "WelcomeScreen",
+        headerShown: false,
+      },
+    },
     HomeTabs: {
       screen: HomeTabs,
       options: {
-        title: "Home",
         headerShown: false,
       },
     },
@@ -97,6 +106,18 @@ const RootStack = createNativeStackNavigator({
     },
     Notification: {
       screen: Notification,
+      options: {
+        headerShown: false,
+      },
+    },
+    Login: {
+      screen: Login,
+      options: {
+        headerShown: false,
+      },
+    },
+    TravelSystem: {
+      screen: TravelSystem,
       options: {
         headerShown: false,
       },
