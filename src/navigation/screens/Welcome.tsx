@@ -10,26 +10,23 @@ import {
 } from "react-native";
 import { ArrowRight } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/native";
+import IconText from "../../components/IconText";
 
 export const WelcomeScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         {/* Logo Header */}
         <View style={styles.logoContainer}>
-          <View style={styles.logoWrapper}>
-            <Image
-              source={require("./../../assets/welcomeLogo.png")}
-              style={styles.illustrationLogo}
-              resizeMode="contain"
-            />
-          </View>
-          <Text style={styles.logoText}>Travel System</Text>
+          <IconText
+            textStyle={{ color: "black" }}
+            imageUri={require("./../../assets/welcomeLogo.png")}
+          />
         </View>
 
         {/* Main Content */}
@@ -79,14 +76,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 48,
   },
-  logoWrapper: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 2,
-  },
   logoText: {
     fontSize: 16,
     fontWeight: "600",
@@ -121,10 +110,6 @@ const styles = StyleSheet.create({
   illustration: {
     width: width * 1,
     height: height * 0.6,
-  },
-  illustrationLogo: {
-    width: 18,
-    height: 20,
   },
   button: {
     position: "absolute",

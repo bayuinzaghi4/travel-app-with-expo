@@ -8,14 +8,16 @@ import {
   FlatList,
   Animated,
   Platform,
+  TouchableOpacity,
 } from "react-native";
-import { Bell, Menu, ArrowLeft } from "lucide-react-native";
+import { Bell, Menu, ArrowLeft, FileText, Clock } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/native";
 import FocusAwareStatusBar from "../../components/FocusAwareStatusBar";
 import SearchButton from "../../components/SearchButton";
 import TravelCard from "../../components/TravelCard";
 import Button from "../../components/Button";
 import travelData from "./dummy";
+import IconText from "../../components/IconText";
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
@@ -23,24 +25,59 @@ const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeButton, setActiveButton] = useState<string>("open");
 
-   const drawerAnimation = React.useRef(new Animated.Value(0)).current;
-  
-    const toggleDrawer = () => {
-      const toValue = isDrawerOpen ? 0 : 1;
-      Animated.timing(drawerAnimation, {
-        toValue,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setIsDrawerOpen(!isDrawerOpen);
-    };
-  
-    const translateX = drawerAnimation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-280, 0],
-    });
+  const drawerAnimation = React.useRef(new Animated.Value(0)).current;
 
-    
+  const toggleDrawer = () => {
+    const toValue = isDrawerOpen ? 0 : 1;
+    Animated.timing(drawerAnimation, {
+      toValue,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const translateX = drawerAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-280, 0],
+  });
+  const renderDrawer = () => (
+    <Animated.View
+      style={[
+        styles.drawer,
+        {
+          transform: [{ translateX }],
+        },
+      ]}
+    >
+      <View style={styles.drawerHeader}>
+        <View style={styles.IconText}>
+          <Image
+            source={require("./../../assets/travelLogo.png")}
+            style={styles.logo}
+          />
+          <Text style={styles.drawerTitle}>Travel System</Text>
+        </View>
+        <TouchableOpacity onPress={toggleDrawer} style={styles.backButton}>
+          <ArrowLeft color="#fff" size={24} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.drawerContent}>
+        <TouchableOpacity style={styles.drawerItem}>
+          <FileText color="#fff" size={20} />
+          <Text style={styles.drawerItemText}>Travel Settlement</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.drawerItem}>
+          <FileText color="#fff" size={20} />
+          <Text style={styles.drawerItemText}>Approval</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.drawerItem}>
+          <Clock color="#fff" size={20} />
+          <Text style={styles.drawerItemText}>History</Text>
+        </TouchableOpacity>
+      </View>
+    </Animated.View>
+  );
 
   const handleButtonPress = (buttonName: string): void => {
     if (activeButton !== buttonName) {
@@ -58,14 +95,8 @@ const Home: React.FC = () => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Menu size={24} color="white" />
-          <View style={styles.container1}>
-            <Image
-              source={require("./../../assets/travelLogo.png")}
-              style={styles.logo}
-            />
-            <Text style={styles.headerTitle}>Travel System</Text>
-          </View>
+          <Menu size={24} color="white" onPress={toggleDrawer} />
+          <IconText />
           <Bell
             size={24}
             color="white"
@@ -126,6 +157,7 @@ const Home: React.FC = () => {
         )}
         keyExtractor={(item) => item.id}
       />
+      {renderDrawer()}
     </SafeAreaView>
   );
 };
@@ -175,6 +207,11 @@ const styles = StyleSheet.create({
   titlee: {
     fontSize: 12,
   },
+  IconText: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   tabs: {
     flexDirection: "row",
     paddingHorizontal: 16,
@@ -211,6 +248,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     justifyContent: "center", // Memusatkan item
     alignItems: "center", // Memusatkan item secara horisontal
+  },
+  drawerHeader: {
+    padding: 16,
+    paddingLeft: 56,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255,255,255,0.1)",
+  },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    top: 16,
+  },
+  drawerTitle: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  drawerContent: {
+    padding: 16,
+  },
+  drawerItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  drawerItemText: {
+    color: "#fff",
+    marginLeft: 16,
+    fontSize: 16,
+  },
+  drawer: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 280,
+    backgroundColor: "#3949AB",
+    paddingTop: Platform.OS === "android" ? 40 : 0,
   },
 });
 

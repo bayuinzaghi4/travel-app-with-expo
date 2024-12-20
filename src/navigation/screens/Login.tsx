@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,11 +10,11 @@ import {
   Platform,
   SafeAreaView,
   StatusBar,
-  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../../components/Button";
 import axios from "axios";
+import IconText from "../../components/IconText";
 
 interface LoginFormData {
   USERNAME: string;
@@ -30,27 +30,27 @@ export function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
-    // navigation.navigate("HomeTabs");
-    try {
-      const response = await axios.post<LoginFormData>(
-        "http://localhost:8080/travel/LoginTravel",
-        {
-          USERNAME,
-          PASSWORD,
-        }
-      );
-      if (response.status === 200) {
-        Alert.alert("Login Succes", `Welcome, ${USERNAME}`);
-        console.log("token", response.data.token);
-        navigation.navigate("HomeTabs");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        Alert.alert("Login Error", error.response.data.message);
-      } else {
-        Alert.alert("error why i dont know");
-      }
-    }
+    navigation.navigate("HomeTabs");
+    //  try {
+    //       const response = await axios.post(
+    //         "http://10.32.125.41:8080/travel/LoginTravel",
+    //         {
+    //           USERNAME,
+    //           PASSWORD,
+    //         }
+    //       );
+    //       console.log('peler',response.data.statusCode);
+
+    //       if (response.data.statusCode === 200) {
+    //         navigation.navigate("HomeTabs");
+    //         // Alert.alert("Login Succes", `Welcome, ${USERNAME}`);
+    //         console.log("token", response.data.token);
+
+    //       }
+
+    //     } catch(e) {
+    //       console.log(e)
+    //     }
   };
 
   return (
@@ -63,12 +63,11 @@ export function Login() {
         <View style={styles.content}>
           {/* Header */}
           <View style={styles.logoContainer}>
-            <Image
-              source={require("./../../assets/welcomeLogo.png")}
-              style={styles.logo}
-              resizeMode="contain"
+            <IconText
+              textStyle={{ color: "black" }}
+              style={styles.iconTextLeft}
+              imageUri={require("./../../assets/welcomeLogo.png")}
             />
-            <Text style={styles.logoText}>Travel System</Text>
           </View>
           {/* Welcome Text */}
           <View style={styles.welcomeContainer}>
@@ -78,7 +77,7 @@ export function Login() {
               from booking to expense tracking and report submission.
             </Text>
           </View>
-
+          {/* Form */}
           <View style={styles.form}>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>USERNAME</Text>
@@ -138,16 +137,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 32,
   },
-  logo: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
-  },
-  logoText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#000",
-  },
   welcomeContainer: {
     marginBottom: 32,
   },
@@ -205,5 +194,10 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
+  },
+  iconTextLeft: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    flex: 1,
   },
 });

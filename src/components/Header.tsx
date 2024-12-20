@@ -10,7 +10,7 @@ interface HeaderProps {
   style?: ViewStyle;
   textStyle?: TextStyle;
   arrowIconStyle?: string;
-}
+};
 
 export const Header: React.FC<HeaderProps> = ({
   onBackPress,
